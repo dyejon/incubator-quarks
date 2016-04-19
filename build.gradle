@@ -1,0 +1,38 @@
+// Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements;
+// and to You under the Apache License, Version 2.0.
+
+ext {
+   jarPrefix = 'quarks.'
+   target = file('target')
+   targetj8 = new File(target, 'java8')
+}
+
+
+subprojects {
+    version = '0.5.0'
+
+    apply plugin: 'java'
+
+    repositories {
+      mavenCentral()
+    }
+
+    configurations {
+       qext
+    }
+
+    dependencies {
+       qext 'com.google.code.gson:gson:2.2.4'
+       compile configurations.qext
+       testCompile 'junit:junit:4.12'
+    }
+
+   task copyExt(type: Copy) {
+       from configurations.qext
+       into new File(targetj8, 'ext')
+   }
+
+   build.dependsOn(copyExt)
+} 
+
+
