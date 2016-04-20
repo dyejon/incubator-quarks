@@ -2,6 +2,5 @@
 // and to You under the Apache License, Version 2.0.
 
 dependencies {
-    compile project(':api:function'), project(':api:window'),
-            project(':api:execution')
+    compile project(':api:window'), project(':api:execution')
 }
