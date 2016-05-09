@@ -15,7 +15,7 @@ ext.artifact = 'samples.topology' // However ArtifactId can be set per artifact 
 description = 'samples demonstrating add-on functionality'
 
 dependencies {
-	compile project(':analytics/math3')
-	compile project(':samples/utils')
-	compile project(':runtime/jobregistry')
+    compile project(':analytics/math3')
+    compile project(':samples/utils')
+    compile project(':runtime/jobregistry')
 }

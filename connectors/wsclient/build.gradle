@@ -15,5 +15,5 @@ ext.artifact = 'connectors.wsclient' // However ArtifactId can be set per artifa
 description = 'Build WebSocket Client connector API.'
 
 dependencies {
-	compile project(':api/topology')
+    compile project(':api/topology')
 }

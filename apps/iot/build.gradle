@@ -15,9 +15,9 @@ ext.artifact = 'apps.iot' // However ArtifactId can be set per artifact in publi
 description = 'Applications utilizing IotDevice'
 
 dependencies {
-	compile project(':api/topology')
-	compile project(':connectors/iot')
-	compile project(':connectors/pubsub')
+    compile project(':api/topology')
+    compile project(':connectors/iot')
+    compile project(':connectors/pubsub')
 
-	testCompile project(':providers/direct')
+    testCompile project(':providers/direct')
 }

@@ -15,5 +15,5 @@ ext.artifact = 'api.window' // However ArtifactId can be set per artifact in pub
 description = 'The window API'
 
 dependencies {
-	compile project(':api/function')
+    compile project(':api/function')
 }

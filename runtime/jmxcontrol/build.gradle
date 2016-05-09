@@ -15,6 +15,6 @@ ext.artifact = 'runtime.jmxcontrol' // However ArtifactId can be set per artifac
 description = 'The runtime JMX control library'
 
 dependencies {
-	compile project(':api/execution')
-	compile project(':api/function')
+    compile project(':api/execution')
+    compile project(':api/function')
 }

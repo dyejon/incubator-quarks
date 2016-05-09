@@ -15,5 +15,5 @@ ext.artifact = 'connectors.serial' // However ArtifactId can be set per artifact
 description = 'Serial Connector API'
 
 dependencies {
-	compile project(':api/topology')
+    compile project(':api/topology')
 }

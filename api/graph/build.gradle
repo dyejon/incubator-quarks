@@ -15,5 +15,5 @@ ext.artifact = 'api.graph' // However ArtifactId can be set per artifact in publ
 description = 'The graph API'
 
 dependencies {
-	compile project(':api/oplet')
+    compile project(':api/oplet')
 }

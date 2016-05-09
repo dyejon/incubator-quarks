@@ -15,13 +15,13 @@ ext.artifact = 'connectors.mqtt' // However ArtifactId can be set per artifact i
 description = 'MQTT Connectors'
 
 dependencies {
-	compile project(':api/topology')
-	compile project(':connectors/common')
-	compile project(':connectors/iot')
-	compile files('./ext/org.eclipse.paho.client.mqttv3-1.0.2.jar')
+    compile project(':api/topology')
+    compile project(':connectors/common')
+    compile project(':connectors/iot')
+    compile files('./ext/org.eclipse.paho.client.mqttv3-1.0.2.jar')
 
-	testCompile project(':providers/direct')
-	testCompile project(':providers/direct').sourceSets.test.output
-	testCompile project(':api/topology').sourceSets.test.output
-	testCompile project(':connectors/common').sourceSets.test.output
+    testCompile project(':providers/direct')
+    testCompile project(':providers/direct').sourceSets.test.output
+    testCompile project(':api/topology').sourceSets.test.output
+    testCompile project(':connectors/common').sourceSets.test.output
 }

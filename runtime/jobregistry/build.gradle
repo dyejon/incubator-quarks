@@ -15,6 +15,6 @@ ext.artifact = 'runtime.jobregistry' // However ArtifactId can be set per artifa
 description = 'The runtime job registry library'
 
 dependencies {
-	compile project(':api/execution')
-	compile project(':api/topology')
+    compile project(':api/execution')
+    compile project(':api/topology')
 }
