@@ -14,6 +14,13 @@ subprojects {
 
     apply plugin: 'java'
 
+    // Temp: Change the location of test classes
+    // to match the ant build. This can be removed
+    // once the build is all gradle
+    sourceSets {
+      test.output.classesDir file('test.classes')
+    }
+
     repositories {
       mavenCentral()
     }
@@ -27,18 +34,8 @@ subprojects {
                     'org.slf4j:slf4j-api:1.7.12'
        testCompile 'junit:junit:4.12'
     }
-
-task copy << {
-    //def manifestCp = ''
-    //configurations.compile.copy().allDependencies
-    //    .each { dep -> println dep.files }
-
-    println configurations.compile.copy().collect() { it.getName() }.join(' ')
-}
-
 } 
 
 clean.doFirst {
     delete target
 }
-
