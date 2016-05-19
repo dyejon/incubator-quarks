@@ -11,10 +11,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+ext.artifact = 'console.servlets' // However ArtifactId can be set per artifact in publishing.publications
+description = 'Web Console Servlets'
+
 buildscript {
     repositories {
         jcenter()
     }
+
     dependencies {
         classpath 'org.akhikhl.gretty:gretty:+'
     }
@@ -22,14 +26,16 @@ buildscript {
 
 apply plugin: 'war'
 apply plugin: 'org.akhikhl.gretty'
-//apply plugin: 'jetty'
 
-ext.artifact = 'console.servlets' // However ArtifactId can be set per artifact in publishing.publications
-description = 'Web Console Servlets'
 
 dependencies {
     compile files('../server/ext/jetty-9.3.6/servlet-api-3.1.jar')
+    compile files('../../ext/slf4j-1.7.12/slf4j-api-1.7.12.jar')
 }
+
+tasks.withType(War) {
+        destinationDir = file("${rootProject.ext.buildDir}/$project.name/../webapps")
+    }
 
 war {
     archiveName 'console.war'
@@ -49,3 +55,5 @@ gretty {
     contextPath = '/'
     servletContainer = 'jetty9'
 }
+
+

@@ -24,3 +24,6 @@ build/
 
 # Eclipse folders
 .settings/
+
+# IntelliJ IDEA folders
+.idea/

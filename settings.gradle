@@ -23,7 +23,7 @@ include "connectors/common", "connectors/file", "connectors/http", "connectors/i
 // console
 include "console/server", "console/servlets"
 // providers
-include "providers/direct", "providers/development"
+include "providers/development", "providers/direct", "providers/iot"
 // runtime
 include "runtime/appservice", "runtime/etiao", "runtime/jobregistry", "runtime/jmxcontrol", "runtime/jsoncontrol"
 // samples
@@ -34,8 +34,3 @@ include "spi/graph", "spi/topology"
 include "utils/metrics"
 // test
 include "test/fvtiot", "test/svt"
-
-//include "api:function", "api:oplet", "api:execution", "api:window",
-//        "api:graph", "api:topology",
-//        "spi:graph", "spi:topology"
-        

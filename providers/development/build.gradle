@@ -21,4 +21,5 @@ dependencies {
     compile project(':runtime/jmxcontrol')
 
     testCompile project(':api/topology').sourceSets.test.output
+    testCompile project(':console/servlets').sourceSets.test.output
 }
