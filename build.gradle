@@ -11,84 +11,42 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import org.gradle.api.JavaVersion
 
-def minJavaVersion = JavaVersion.VERSION_1_8;
-ext.buildDir = "${rootDir}/target/gradle"
+apply plugin: 'base' 
 
-println "buildDir =  $buildDir"
-
-allprojects {
-    apply plugin: 'idea'
-    apply plugin: 'eclipse'
-}
-
-task clean(type: Delete) {
-
-    println "delete =  ${rootProject.ext.buildDir}"
-    delete "${rootProject.ext.buildDir}"
+ext {
+   jarPrefix = 'quarks.'
+   target = file('target')
+   targetj8 = new File(target, 'java8')
 }
 
 subprojects {
-    apply plugin: 'java'
-    apply plugin: 'maven-publish'
+    version = '0.5.0'
 
-    repositories {
-        mavenCentral()
+    apply plugin: 'java'
+
+    // Temp: Change the location of test classes
+    // to match the ant build. This can be removed
+    // once the build is all gradle
+    sourceSets {
+      test.output.classesDir file('test.classes')
     }
 
-    tasks.withType(Jar) {
-        println "withTypeJar : ${rootProject.ext.buildDir}/$project.name/lib"
-        destinationDir = file("${rootProject.ext.buildDir}/$project.name/lib")
+    repositories {
+      mavenCentral()
+    }
+
+    configurations {
+       qext
     }
 
     dependencies {
-        compile group: 'com.google.code.gson', name: 'gson', version: '2.2.4'
-        compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.12'
-        compile group: 'io.dropwizard.metrics', name: 'metrics-core', version: '3.1.2'
-        testCompile 'junit:junit:4.8.2'
-        testCompile group: 'org.slf4j', name: 'slf4j-jdk14', version: '1.7.12'
+       qext 'com.google.code.gson:gson:2.2.4',
+                    'org.slf4j:slf4j-api:1.7.12'
+       testCompile 'junit:junit:4.12'
     }
+} 
 
-    test {
-        filter {
-            //include specific method in any of the tests
-            includeTestsMatching "quarks.test.*"
-            exclude  "TestManual*"
-        }
-    }
-
-    jar {
-        archiveName = "${rootProject.name}.${project.name}.jar".replaceAll("/", ".")
-
-        if (project.hasProperty('moduleName') && !projectName.equals(moduleName)) {
-            appendix = moduleName
-        }
-
-        manifest.attributes provider: 'Apache Software Foundation'
-
-        manifest {
-            attributes 'Implementation-Version': version,
-                    'Implementation-Vendor': 'dev@quarks.incubator.apache.org'
-        }
-    }
-
-    task copyToLib(type: Copy) {
-        println "copyToLibJar : ${rootProject.ext.buildDir}/$project.name/ext"
-        into "${rootProject.ext.buildDir}/$project.name/ext"
-        from configurations.compile.filter{!it.name.startsWith('quarks')}
-    }
-
-    task sourceJar(type: Jar) {
-        // baseName-appendix-version-classifier.extension
-        from sourceSets.main.allJava
-        classifier = 'sources'
-    }
-
-    task javadocJar(type: Jar, dependsOn: 'javadoc') {
-        from javadoc.destinationDir
-        classifier = 'javadoc'
-    }
-
-    task listAllDependencies(type: DependencyReportTask) {}
+clean.doFirst {
+    delete target
 }

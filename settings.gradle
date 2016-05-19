@@ -34,3 +34,8 @@ include "spi/graph", "spi/topology"
 include "utils/metrics"
 // test
 include "test/fvtiot", "test/svt"
+
+//include "api:function", "api:oplet", "api:execution", "api:window",
+//        "api:graph", "api:topology",
+//        "spi:graph", "spi:topology"
+        
