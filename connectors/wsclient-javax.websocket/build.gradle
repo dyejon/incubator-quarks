@@ -1,0 +1,45 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+ext.artifact = 'connectors.wsclient-javax.websocket' // However ArtifactId can be set per artifact in publishing.publications
+description = 'Build JSR356 javax.websocket based WebSocket Client connector'
+
+dependencies {
+    compile project(':api/topology')
+    compile project(':connectors/common')
+    compile project(':connectors/wsclient')
+    compile project(':connectors/quarks.javax.websocket')
+    compile files('./ext/javax.websocket-api-1.0.jar')
+
+    testCompile project(':providers/direct')
+    testCompile project(':providers/direct').sourceSets.test.output
+    testCompile project(':api/topology').sourceSets.test.output
+    testCompile project(':connectors/common').sourceSets.test.output
+    testCompile project(':connectors/javax.websocket-client')
+    testCompile project(':connectors/javax.websocket-server')
+
+    testCompile files('../javax.websocket-server/ext/javax-websocket-server-impl-9.3.6.v20151106.jar')
+    testCompile files('../javax.websocket-server/ext/jetty-http-9.3.6.v20151106.jar')
+    testCompile files('../javax.websocket-server/ext/jetty-io-9.3.6.v20151106.jar')
+    testCompile files('../javax.websocket-server/ext/jetty-security-9.3.6.v20151106.jar')
+    testCompile files('../javax.websocket-server/ext/jetty-server-9.3.6.v20151106.jar')
+    testCompile files('../javax.websocket-server/ext/jetty-servlet-9.3.6.v20151106.jar')
+    testCompile files('../javax.websocket-server/ext/servlet-api-3.1.jar')
+    testCompile files('../javax.websocket-server/ext/websocket-server-9.3.6.v20151106.jar')
+    testCompile files('../javax.websocket-server/ext/websocket-servlet-9.3.6.v20151106.jar')
+
+//    testCompile project(':connectors/javax.websocket-client').configurations.runtime
+//    testCompile project(':connectors/javax.websocket-server').configurations.compile
+//    testCompile files('../javax.websocket-server/ext/jetty-http-9.3.6.v20151106.jar')
+//    testCompile files('../javax.websocket-server/ext/jetty-server-9.3.6.v20151106.jar')
+}
