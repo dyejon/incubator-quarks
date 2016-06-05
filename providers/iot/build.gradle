@@ -11,15 +11,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-ext.artifact = 'providers.development' // However ArtifactId can be set per artifact in publishing.publications
-description = 'The development topology provider'
+ext.artifact = 'providers.iot' // However ArtifactId can be set per artifact in publishing.publications
+description = 'The iot topology provider'
 
 dependencies {
     compile project(':providers/direct')
-    compile project(':console/server')
-    compile project(':utils/metrics')
-    compile project(':runtime/jmxcontrol')
+    compile project(':runtime/jsoncontrol')
+    compile project(':runtime/appservice')
+    compile project(':connectors/iot')
+    compile project(':connectors/pubsub')
+    compile project(':apps/iot')
 
     testCompile project(':api/topology').sourceSets.test.output
-    testCompile project(':console/servlets').sourceSets.test.output
 }

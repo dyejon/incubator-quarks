@@ -15,7 +15,9 @@ ext.artifact = 'test.fvtiot' // However ArtifactId can be set per artifact in pu
 description = 'FVT for IoT scenario'
 
 dependencies {
-    compile project(':providers/direct')
+    compile project(':providers/iot')
     compile project(':runtime/appservice')
     compile project(':runtime/jsoncontrol')
+
+    testCompile project(':apps/iot').sourceSets.test.output
 }
