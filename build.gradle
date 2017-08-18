@@ -11,6 +11,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.6'
+    }
+}
+
 import org.gradle.api.JavaVersion
 
 def minJavaVersion = JavaVersion.VERSION_1_8;
@@ -19,20 +28,22 @@ ext.buildDir = "${rootDir}/target/gradle"
 allprojects {
     apply plugin: 'idea'
     apply plugin: 'eclipse'
+    apply plugin: 'com.jfrog.bintray'
+
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
 }
 
 task clean(type: Delete) {
-    println "delete =  ${rootProject.ext.buildDir}"
+    // println "delete =  ${rootProject.ext.buildDir}"
     delete "${rootProject.ext.buildDir}"
 }
 
 subprojects {
     apply plugin: 'java'
     apply plugin: 'maven-publish'
-
-    repositories {
-        mavenCentral()
-    }
 
     dependencies {
         compile group: 'com.google.code.gson', name: 'gson', version: '2.2.4'
@@ -55,6 +66,27 @@ subprojects {
         }
     }
 
+    def versionprop = "${version}"
+
+    bintray {
+        user = System.getenv('BINTRAY_USER')
+        key = System.getenv('BINTRAY_KEY')
+        publish = false
+        pkg {
+            repo = 'maven'
+            name = 'quarks'
+            licenses = ['Apache-2.0']
+            vcsUrl = 'https://github.com/apache/incubator-quarks.git'
+            version {
+                name = "${versionprop}"
+                desc = 'What does this do'
+                released = new Date()
+                vcsTag = "${versionprop}"
+            }
+        }
+        publications = ['Quarks']
+    }
+
     jar {
         archiveName = "${rootProject.name}.${project.name}.jar".replaceAll("/", ".")
 
@@ -66,24 +98,41 @@ subprojects {
 
         manifest {
             attributes 'Implementation-Version': version,
-                    'Implementation-Vendor': 'dev@quarks.incubator.apache.org'
+                       'Implementation-Vendor': 'dev@quarks.incubator.apache.org'
         }
     }
 
     task copyToLib(type: Copy) {
-        println "copyToLibJar : ${rootProject.ext.buildDir}/$project.name/ext"
+        // println "copyToLibJar : ${rootProject.ext.buildDir}/$project.name/ext"
         into "${rootProject.ext.buildDir}/$project.name/ext"
         from configurations.compile.filter{!it.name.startsWith('quarks')}
     }
 
-    task sourceJar(type: Jar) {
+    task sourceJar(type: Jar, dependsOn: classes) {
         // baseName-appendix-version-classifier.extension
         from sourceSets.main.allJava
         classifier = 'sources'
     }
 
-    task javadocJar(type: Jar, dependsOn: 'javadoc') {
+    task javadocJar(type: Jar, dependsOn: javadoc) {
         from javadoc.destinationDir
         classifier = 'javadoc'
+    }
+
+    artifacts {
+        archives sourceJar
+    }
+
+    publishing {
+        publications {
+            Quarks(MavenPublication) {
+                from components.java
+                groupId group
+                artifactId "${project.name}".replaceAll("/", ".")
+                version version
+
+                artifact sourceJar
+            }
+        }
     }
 }
